@@ -11,7 +11,7 @@
 
 
 
-Apply KMeans to a synthetic 2-cluster dataset; compute and visualize inertia. 
+Reduce 4D Iris data to 2 principal components and visualize species separation. 
 
 
 
@@ -25,7 +25,7 @@ Apply KMeans to a synthetic 2-cluster dataset; compute and visualize inertia.
 
 
 
-Lloyd’s algorithm: assign to nearest centroid → recompute centroids until convergence. 
+PCA via SVD: compute components that capture maximal variance. 
 
 
 
@@ -38,37 +38,32 @@ Lloyd’s algorithm: assign to nearest centroid → recompute centroids until co
 
 
 
-KMeans minimizes within-cluster variance; relates to vector quantization. 
+PCA finds orthogonal directions of maximal variance (eigenvectors of covariance matrix). 
 
 
 ```
 
 
 ## INPUT: 
-import numpy as np 
+from sklearn.decomposition import PCA 
+from sklearn.datasets import load_iris 
 import matplotlib.pyplot as plt 
-from sklearn.cluster import KMeans 
-np.random.seed(42) 
-X = np.vstack([np.random.randn(50,2)+np.array([0,0]), 
-np.random.randn(50,2)+np.array([5,5])]) 
-kmeans = KMeans(n_clusters=2, random_state=42).fit(X) 
-labels = kmeans.labels_ 
-centers = kmeans.cluster_centers_ 
-plt.scatter(X[:,0], X[:,1], c=labels, cmap='viridis'); 
-plt.scatter(centers[:,0], centers[:,1], marker='x', color='red', 
-s=100); plt.title('KMeans Clusters'); plt.show() 
-print('Inertia (WCSS):', round(kmeans.inertia_,3)) 
-DETAILED EXPLANATION: 
-1. Generate two Gaussian blobs for two clusters. 
-2. KMeans(...).fit(X) runs the clustering iterations; labels_ are assignments; 
-cluster_centers_ are learned centroids. 
-3. Plot points colored by cluster and overlay centroids. 
-4. inertia_ measures within-cluster sum-of-squares. 
+import numpy as np 
+iris = load_iris() 
+X = iris.data; y = iris.target 
+pca = PCA(n_components=2) 
+Z = pca.fit_transform(X) 
+print('Explained variance ratio:', 
+np.round(pca.explained_variance_ratio_,4)) 
+plt.scatter(Z[:,0], Z[:,1], c=y, cmap='viridis'); plt.xlabel('PC1'); 
+plt.ylabel('PC2'); plt.title('PCA of Iris'); plt.show()
 
 
+## OUTPUT:
 
-## OUTPUT: 
-Scatter plot showing two clusters; Inertia (WCSS): 180.342 (value varies).
+
+Explained variance ratio: [0.9246 0.0531] 
+(Scatter plot shows separation among species)
 
 
 ```
@@ -76,8 +71,10 @@ Scatter plot showing two clusters; Inertia (WCSS): 180.342 (value varies).
 
 
 ## RESULT: 
-Students observe cluster structure and effect of centroid positions. Note sensitivity to 
-initialization & scaling. 
+
+
+Students see PC1 captures most variance; PCA useful for visualization and 
+dimensionality reduction. 
 
 
 
