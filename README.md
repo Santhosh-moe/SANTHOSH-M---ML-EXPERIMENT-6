@@ -1,4 +1,5 @@
-## DATE: 06/10/2026
+## Experiment 6: Principal Component Analysis (PCA) on Iris
+
 
 
 
