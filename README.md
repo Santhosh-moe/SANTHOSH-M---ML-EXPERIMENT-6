@@ -42,10 +42,10 @@ PCA via SVD: compute components that capture maximal variance.
 PCA finds orthogonal directions of maximal variance (eigenvectors of covariance matrix). 
 
 
+## INPUT: 
+
 ```
 
-
-## INPUT: 
 from sklearn.decomposition import PCA 
 from sklearn.datasets import load_iris 
 import matplotlib.pyplot as plt 
@@ -59,15 +59,14 @@ np.round(pca.explained_variance_ratio_,4))
 plt.scatter(Z[:,0], Z[:,1], c=y, cmap='viridis'); plt.xlabel('PC1'); 
 plt.ylabel('PC2'); plt.title('PCA of Iris'); plt.show()
 
+```
 
 ## OUTPUT:
-
-
-Explained variance ratio: [0.9246 0.0531] 
-(Scatter plot shows separation among species)
-
-
 ```
+Explained variance ratio: [0.9246 0.0531] 
+```
+
+<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/8aca0de3-bcba-4e67-9893-ed04ecdd1ed0" />
 
 
 
